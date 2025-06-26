@@ -1,3 +1,14 @@
+# 确保主干最新
+git switch main
+git pull origin main           # 拉远端更新
+
+# 合并
+git merge feature/login-A
+
+# 若无冲突
+git push origin main
+
+
 # 创建并切换功能分支
 git switch -c feat/xxx-作者
 
