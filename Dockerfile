@@ -29,13 +29,11 @@ RUN echo "[global]\nindex-url = ${PYPI_MIRROR}" > /etc/pip.conf
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     python3 -m pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
-    TORCH_CUDA_ARCH_LIST="7.0" \
-      FLASH_ATTENTION_FORCE_BUILD_RMSNORM=1 \
-      pip install --no-cache-dir --no-build-isolation \
-        -i https://pypi.org/simple \
-        "flash-attn@git+https://github.com/Dao-AILab/flash-attention.git@v2.5.6" \
-        packaging wheel
+    pip install --no-cache-dir -r requirements.txt \
+                   imageio imageio-ffmpeg decord==0.6.0 && \
+    pip install --no-cache-dir \
+      flash-attn==2.5.6 \
+      --extra-index-url https://flash-attention-cuda-releases.s3.us-west-2.amazonaws.com/cu121/ # 官方 CDN
 
 COPY --chown=${USERNAME}:${USERNAME} --chmod=755 . .
 

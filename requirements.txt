@@ -20,3 +20,4 @@ timm
 opencv-python-headless
 imageio
 imageio-ffmpeg
+decord
