@@ -1,0 +1,28 @@
+# 确保主干最新
+git switch main
+git pull origin main           # 拉远端更新
+
+# 合并
+git merge feature/login-A
+
+# 若无冲突
+git push origin main
+
+
+# 创建并切换功能分支
+git switch -c feat/xxx-作者
+
+# 查看本/远端分支
+git branch          # 本地
+git branch -r       # 远程
+
+# 同步主线并保持分支线性
+git fetch origin
+git rebase origin/main
+
+# 解决完冲突继续
+git add .
+git rebase --continue
+
+# 推送当前分支并建立跟踪
+git push -u origin HEAD
