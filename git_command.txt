@@ -3,7 +3,7 @@ git switch main
 git pull origin main           # 拉远端更新
 
 # 合并
-git merge feature/login-A
+git merge feature/**-name
 
 # 若无冲突
 git push origin main

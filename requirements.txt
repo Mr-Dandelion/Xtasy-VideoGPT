@@ -21,3 +21,6 @@ opencv-python-headless
 imageio
 imageio-ffmpeg
 decord
+mmengine
+google
+protobuf
