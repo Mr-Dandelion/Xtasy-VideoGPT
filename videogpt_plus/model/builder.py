@@ -1,9 +1,18 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig, BitsAndBytesConfig
 import torch
 from videogpt_plus.model import *
 from videogpt_plus.constants import *
-from transformers import AutoConfig, AutoModelForCausalLM
+import torch.nn as nn
+def _hf_stub_initialize_weights(self, *args, **kwargs):
+    """
+    供 transformers.smart_apply 调用的占位函数。
+    什么都不做，但能保证属性存在。
+    """
+    return
 
+# 只在缺失时注入，避免覆盖已存在的实现
+if not hasattr(nn.Module, "_initialize_weights"):
+    nn.Module._initialize_weights = _hf_stub_initialize_weights
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig, BitsAndBytesConfig
 
 def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, load_4bit=False, lora_weights=True):
     kwargs = {}

@@ -550,6 +550,9 @@ class PretrainInternVideo2(nn.Module):
             nn.init.constant_(m.bias, 0)
             nn.init.constant_(m.weight, 1.0)
 
+    # def _initialize_weights(self, module):
+    #     self._init_weights(module)
+
     def fix_init_weight(self):
         def rescale(param, layer_id):
             param.div_(math.sqrt(2.0 * layer_id))
