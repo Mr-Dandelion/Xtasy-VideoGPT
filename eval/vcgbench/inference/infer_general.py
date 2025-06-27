@@ -7,6 +7,8 @@ from videogpt_plus.mm_utils import tokenizer_image_token, get_model_name_from_pa
 from eval.vcgbench.inference.ddp import *
 from torch.utils.data import DataLoader, DistributedSampler
 import traceback
+from eval.video_encoding import _get_rawvideo_dec
+
 
 
 def disable_torch_init():
@@ -45,11 +47,25 @@ def eval_model(args):
 
     dataset = EvalDatasetGeneric(args.question_file, args.video_folder, image_processor, video_processor)
     distributed_sampler = DistributedSampler(dataset, rank=args.rank, shuffle=False)
-    dataloader = DataLoader(dataset, batch_size=args.batch_size_per_gpu, num_workers=4, sampler=distributed_sampler)
-
-    for (idx, sample_set, video_frames, context_frames, slice_len) in tqdm(dataloader):
-        idx, sample_set, video_frames, context_frames, slice_len = int(idx[0]), sample_set[
-            0], video_frames, context_frames, int(slice_len[0])
+    dataloader = DataLoader(
+        dataset,
+        batch_size=args.batch_size_per_gpu,
+        num_workers=4,  # 重点！必须用 0，避免 multiprocessing
+        sampler=distributed_sampler,
+        persistent_workers=False,  # 重点！防止 worker 复用导致通信失败
+        pin_memory=False,  # 重点！防止 pin 显存导致 bus error
+        prefetch_factor=2  # 稳定性更好
+    )
+    for (idx, sample_set, video_path) in tqdm(dataloader, disable=args.local_rank!=0):
+        idx = int(idx[0])  # 转为 int
+        sample_set = sample_set[0]  # 取出 dict
+        video_path = video_path[0]  # 取出 str
+        video_frames, context_frames, slice_len = _get_rawvideo_dec(video_path, image_processor,
+                                                                    video_processor,
+                                                                    max_frames=NUM_FRAMES,
+                                                                    image_resolution=224,
+                                                                    num_video_frames=NUM_FRAMES,
+                                                                    num_context_images=NUM_CONTEXT_IMAGES)
 
         sample = sample_set
         qs = sample['Q'][0]
@@ -74,8 +90,8 @@ def eval_model(args):
             with torch.inference_mode():
                 output_ids = model.generate(
                     input_ids,
-                    images=torch.cat(video_frames, dim=0).half().cuda(),
-                    context_images=torch.cat(context_frames, dim=0).half().cuda(),
+                    images = video_frames.half().cuda(),
+                    context_images = context_frames.half().cuda(),
                     do_sample=True if args.temperature > 0 else False,
                     temperature=args.temperature,
                     top_p=args.top_p,
@@ -120,7 +136,7 @@ if __name__ == "__main__":
     parser.add_argument("--question-file", type=str, default="VCGBench/Benchmarking_QA/generic_qa.json")
     parser.add_argument("--output-dir", type=str, default="MBZUAI/VideoGPT-plus_Phi3-mini-4k/vcgbench/vcgbench_eval/answer-vcgbench-general")
     parser.add_argument("--conv-mode", type=str, default="phi3_instruct")
-    parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument("--temperature", type=float, default=0.3)
     parser.add_argument("--top_p", type=float, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
 

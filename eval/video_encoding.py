@@ -92,7 +92,8 @@ def _get_rawvideo_dec(video_path, image_processor, video_processor, max_frames=1
     else:
         while len(patch_images) < num_video_frames:
             patch_images.append(torch.zeros((3, image_resolution, image_resolution)))
-
+    patch_images = torch.stack(patch_images, dim=0)  # [T, 3, H, W]
+    context_images = torch.stack(context_images, dim=0)  # [T_context, 3, H, W]
     return patch_images, context_images, slice_len
 
 

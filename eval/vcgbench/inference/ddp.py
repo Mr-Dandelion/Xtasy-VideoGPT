@@ -4,7 +4,7 @@ import torch
 import subprocess
 from videogpt_plus.constants import *
 from eval.video_encoding import _get_rawvideo_dec
-
+import sys
 
 class EvalDatasetGeneric(Dataset):
     def __init__(self, qa_path, video_dir, image_processor, video_processor):
@@ -19,31 +19,39 @@ class EvalDatasetGeneric(Dataset):
     def __len__(self):
         return len(self.gt_contents)
 
+    # def __getitem__(self, idx):
+    #     sample = self.gt_contents[idx]
+    #     video_name = sample['video_name']
+    #     sample_set = sample
+    #
+    #     for fmt in self.video_formats:  # Added this line
+    #         temp_path = os.path.join(self.video_dir, f"{video_name}{fmt}")
+    #         if os.path.exists(temp_path):
+    #             video_path = temp_path
+    #             break
+    #     #print(video_path)
+    #     #sys.exit()
+    #     if os.path.exists(video_path):  # Modified this line
+    #         video_frames, context_frames, slice_len = _get_rawvideo_dec(video_path, self.image_processor,
+    #                                                                     self.video_processor,
+    #                                                                     max_frames=NUM_FRAMES,
+    #                                                                     image_resolution=224,
+    #                                                                     num_video_frames=NUM_FRAMES,
+    #                                                                     num_context_images=NUM_CONTEXT_IMAGES)
+    #     else:
+    #         print(f'Video {video_path} not found')
+    #         video_frames, context_frames, slice_len = "None", "None", 0
+    #
+    #     return idx, [sample_set], video_frames, context_frames, slice_len
     def __getitem__(self, idx):
         sample = self.gt_contents[idx]
         video_name = sample['video_name']
-        sample_set = sample
-
-        # Load the video file
         for fmt in self.video_formats:  # Added this line
             temp_path = os.path.join(self.video_dir, f"{video_name}{fmt}")
             if os.path.exists(temp_path):
                 video_path = temp_path
                 break
-
-        # Check if the video exists
-        if os.path.exists(video_path):  # Modified this line
-            video_frames, context_frames, slice_len = _get_rawvideo_dec(video_path, self.image_processor,
-                                                                        self.video_processor,
-                                                                        max_frames=NUM_FRAMES,
-                                                                        image_resolution=224,
-                                                                        num_video_frames=NUM_FRAMES,
-                                                                        num_context_images=NUM_CONTEXT_IMAGES)
-        else:
-            print(f'Video {video_path} not found')
-            video_frames, context_frames, slice_len = "None", "None", 0
-
-        return idx, [sample_set], video_frames, context_frames, slice_len
+        return idx, [sample], video_path
 
 
 def setup_for_distributed(is_master):

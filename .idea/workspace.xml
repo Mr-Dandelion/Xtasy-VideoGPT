@@ -6,8 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="bcbcc982-1e66-418c-99ff-075fa7e8d0c6" name="更改" comment="add">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/git_command.txt" beforeDir="false" afterPath="$PROJECT_DIR$/git_command.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eval/vcgbench/inference/ddp.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval/vcgbench/inference/ddp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eval/vcgbench/inference/infer_consistency.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval/vcgbench/inference/infer_consistency.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eval/vcgbench/inference/infer_general.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval/vcgbench/inference/infer_general.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eval/video_encoding.py" beforeDir="false" afterPath="$PROJECT_DIR$/eval/video_encoding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/videogpt_plus/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/videogpt_plus/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/videogpt_plus/model/arch.py" beforeDir="false" afterPath="$PROJECT_DIR$/videogpt_plus/model/arch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/videogpt_plus/model/builder.py" beforeDir="false" afterPath="$PROJECT_DIR$/videogpt_plus/model/builder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/videogpt_plus/model/internvideo/internvideo2.py" beforeDir="false" afterPath="$PROJECT_DIR$/videogpt_plus/model/internvideo/internvideo2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/videogpt_plus/model/internvideo/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/videogpt_plus/model/internvideo/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +41,16 @@
   "selectedUrlAndAccountId": {
     "url": "git@github.com:Mr-Dandelion/Xtasy-VideoGPT.git",
     "accountId": "479e3c2f-16f2-43f6-8126-e3d0115682fb"
+  },
+  "recentNewPullRequestHead": {
+    "server": {
+      "useHttp": false,
+      "host": "github.com",
+      "port": null,
+      "suffix": null
+    },
+    "owner": "Mr-Dandelion",
+    "repository": "Xtasy-VideoGPT"
   }
 }]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
@@ -52,13 +69,13 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHELLCHECK.PATH": "我会在意",
-    "git-widget-placeholder": "feat/new-lanfeng",
+    "git-widget-placeholder": "feat/new-lanfeng 上的 #2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "Errors",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -77,7 +94,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1750836616419</updated>
-      <workItem from="1750836617670" duration="19266000" />
+      <workItem from="1750836617670" duration="33017000" />
     </task>
     <task id="LOCAL-00001" summary="add">
       <option name="closed" value="true" />
@@ -119,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750920892981</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add">
+      <option name="closed" value="true" />
+      <created>1750922280575</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1750922280575</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

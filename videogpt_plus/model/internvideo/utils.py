@@ -9,6 +9,7 @@ import numpy as np
 import cv2
 import os
 import torch
+import sys
 from torch import nn
 from videogpt_plus.model.internvideo.internvideo2 import pretrain_internvideo2_1b_patch14_224
 from videogpt_plus.model.internvideo.pos_embed import interpolate_pos_embed_internvideo2_new
@@ -65,7 +66,7 @@ def setup_internvideo2V(config: dict):
         torch.set_float32_matmul_precision('high')
         model = torch.compile(model)
 
-    model = model.to(torch.device(config.device))
+    model.to_empty(device=torch.device(config.device))
     model_without_ddp = model
 
     if (config.pretrained_path.strip() and (
@@ -87,7 +88,7 @@ def setup_internvideo2V(config: dict):
             assert a == len(state_dict), state_dict.keys()
 
         msg = model_without_ddp.load_state_dict(state_dict, strict=False)
-        print(f"load_state_dict: {msg}")
+        #print(f"load_state_dict: {msg}")
 
     if config.get('use_bf16', False):
         model_without_ddp = model_without_ddp.to(torch.bfloat16)
@@ -164,8 +165,8 @@ class InternVideo2_Stage2V(nn.Module):
                 state_dict, self.vision_encoder, orig_t_size=self.config.origin_num_frames
             )
             assert a == len(state_dict), state_dict.keys()
-        msg = self.load_state_dict(state_dict, strict=False)
-        print(f"load_state_dict: {msg}")
+        #msg = self.load_state_dict(state_dict, strict=False)
+        #print(f"load_state_dict: {msg}")
 
     def freeze_vision(self):
         """freeze vision encoder"""

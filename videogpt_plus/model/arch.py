@@ -13,8 +13,8 @@ class MetaModel:
         super(MetaModel, self).__init__(config)
 
         if hasattr(config, "mm_vision_tower"):
-            self.vision_tower = build_vision_tower(config, delay_load=True, image_vision_tower=False)
-            self.image_vision_tower = build_vision_tower(config, delay_load=True, image_vision_tower=True)
+            self.vision_tower = build_vision_tower(config, delay_load=False, image_vision_tower=False)
+            self.image_vision_tower = build_vision_tower(config, delay_load=False, image_vision_tower=True)
             self.mm_projector = build_vision_projector(config, image_mm_projector=False)
             self.image_mm_projector = build_vision_projector(config, image_mm_projector=True)
 
